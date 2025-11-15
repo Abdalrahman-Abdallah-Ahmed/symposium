@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Conference;
 use App\Models\Talk;
 use App\Models\User;
-use Database\Factories\TalkFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
