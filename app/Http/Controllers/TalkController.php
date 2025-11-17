@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TalkType;
 use App\Models\Talk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class TalkController extends Controller
 {
@@ -21,7 +23,7 @@ class TalkController extends Controller
      */
     public function create()
     {
-        return view('talk.create');
+        return view('talk.create', ['talk'=>'']);
     }
 
     /**
@@ -32,7 +34,7 @@ class TalkController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:255',
             'length' => '',
-            'type' => 'required',
+            'type' => ['required', Rule::enum(TalkType::class)],
             'abstract' => '',
             'organizer_notes' => '',
         ]);
@@ -55,7 +57,7 @@ class TalkController extends Controller
      */
     public function edit(Talk $talk)
     {
-        //
+        return view('talk.edit', ['talk' => $talk]);
     }
 
     /**
@@ -63,7 +65,7 @@ class TalkController extends Controller
      */
     public function update(Request $request, Talk $talk)
     {
-        //
+        dd($request, $talk);
     }
 
     /**
@@ -71,6 +73,10 @@ class TalkController extends Controller
      */
     public function destroy(Talk $talk)
     {
-        //
+        if($talk->user_id === Auth::user()->id){
+            $talk->delete();
+        }
+
+        return redirect()->route('talks.index');
     }
 }

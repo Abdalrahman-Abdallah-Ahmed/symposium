@@ -9,11 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <ul class="list-disc pl-4">
-                            <li>
-                                {{ $talk->title }}
-                            </li>
-                    </ul>
+                    {{ $talk->title }}
+                    <x-delete_item :route="route('talks.delete', ['talk' => $talk])" text="Delete This Talk" />
+                    <a class="underline" href="{{ route('talks.edit', ['talk'=> $talk]) }}">Edit this talk</a>
                 </div>
             </div>
         </div>
