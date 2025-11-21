@@ -15,7 +15,7 @@ class TalkController extends Controller
      */
     public function index()
     {
-        return view('talk.index',['talks'=>Auth::user()->talks]);
+        return view('talk.index', ['talks' => Auth::user()->talks]);
     }
 
     /**
@@ -23,7 +23,7 @@ class TalkController extends Controller
      */
     public function create()
     {
-        return view('talk.create', ['talk'=>'']);
+        return view('talk.create', ['talk' => '']);
     }
 
     /**
@@ -31,6 +31,9 @@ class TalkController extends Controller
      */
     public function store(Request $request)
     {
+        if ($talk->author->id != Auth::user()->id) {
+            abort(403);
+        }
         $validated = $request->validate([
             'title' => 'required|max:255',
             'length' => '',
@@ -49,7 +52,11 @@ class TalkController extends Controller
      */
     public function show(Talk $talk)
     {
-        return view('talk.show', ['talk'=>$talk]);
+        if ($talk->author->id != Auth::user()->id) {
+            abort(403);
+        }
+
+        return view('talk.show', ['talk' => $talk]);
     }
 
     /**
@@ -76,6 +83,7 @@ class TalkController extends Controller
 
             $talk->update($validated);
         }
+
         return redirect()->route('talks.show', ['talk' => $talk]);
     }
 
@@ -84,7 +92,7 @@ class TalkController extends Controller
      */
     public function destroy(Talk $talk)
     {
-        if($talk->user_id === Auth::user()->id){
+        if ($talk->user_id === Auth::user()->id) {
             $talk->delete();
         }
 
