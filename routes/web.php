@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\GithubLogin;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TalkController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Socialite;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,5 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/talks/create', [TalkController::class, 'create'])->name('talks.create');
     Route::post('/talks', [TalkController::class, 'store'])->name('talks.store');
 });
+
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('github')->redirect();
+});
+
+Route::get('/auth/callback', [GithubLogin::class, 'login']);
 
 require __DIR__.'/auth.php';
