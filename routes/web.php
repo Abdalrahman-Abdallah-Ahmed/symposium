@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ConferenceController;
+use App\Http\Controllers\ConferenceFavoriteController;
 use App\Http\Controllers\GithubLogin;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TalkController;
@@ -26,6 +28,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/talks', [TalkController::class, 'index'])->name('talks.index');
     Route::get('/talks/create', [TalkController::class, 'create'])->name('talks.create');
     Route::post('/talks', [TalkController::class, 'store'])->name('talks.store');
+    Route::get('/conferences', [ConferenceController::class, 'index'])->name('conferences.index');
+    Route::get('/conferences/{conference}', [ConferenceController::class, 'show'])->name('conferences.show')->whereNumber('conference');
+
+    Route::post('/conferences/{conference}/favorite', [ConferenceFavoriteController::class, 'store'])->name('conferences.favorite')->whereNumber('conference');
+    Route::delete('/conferences/{conference}/favorite', [ConferenceFavoriteController::class, 'destroy'])->name('conferences.unfavorite')->whereNumber('conference');
+
+
 });
 
 

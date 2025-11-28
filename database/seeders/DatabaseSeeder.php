@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         ->create([
             'name' => 'Abdoz',
             'email' => 'abdoz@example.com',
+            'password' => bcrypt('123123123'),
         ]);
 
         Conference::factory()->count(5)->create();

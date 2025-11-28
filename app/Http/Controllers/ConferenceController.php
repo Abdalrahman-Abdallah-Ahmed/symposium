@@ -12,8 +12,11 @@ class ConferenceController extends Controller
      */
     public function index()
     {
-        //
+        $conferences = Conference::get()->all();
+    
+        return view('conferences.index', compact('conferences'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -36,7 +39,7 @@ class ConferenceController extends Controller
      */
     public function show(Conference $conference)
     {
-        //
+        return view('conferences.show', ['conference' => $conference]);
     }
 
     /**

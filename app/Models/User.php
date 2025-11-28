@@ -52,4 +52,8 @@ class User extends Authenticatable
     public function talks(){
         return $this->hasMany(Talk::class);
     }
+
+    public function favoriteConferences(){
+        return $this->belongsToMany(Conference::class, 'favorites');
+    }
 }

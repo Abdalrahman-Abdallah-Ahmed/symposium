@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Conference;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('conferences', function (Blueprint $table) {
-            $table->string('callingallpapers_id')->nullable(
-                
-            );
+        Schema::create('favorites', function (Blueprint $table) {
+            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Conference::class);
         });
     }
 
@@ -23,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('conferences', function (Blueprint $table) {
-            $table->dropColumn('callingallpapers_id');
-        });
+        Schema::dropIfExists('favorites');
     }
 };
